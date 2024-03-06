@@ -12,26 +12,15 @@
 void mmm_init() {
 	// malloc a size N array of pointers to doubles
 	A = (double **) malloc(size * sizeof(double*));
+	B = (double **) malloc(size * sizeof(double*));
+	SEQ_MATRIX = (double **) malloc(size * sizeof(double*));
+	PAR_MATRIX = (double **) malloc(size * sizeof(double*));
+
 	 // iterate through each row and malloc a size N array of doubles
 	for (int i = 0; i < size; i++) {
 		A[i] = (double*) malloc(sizeof(double) * size);
-	}
-	// allocate the rest of the matrices
-	B = (double **) malloc(size * sizeof(double*));
-	 // iterate through each row and malloc a size N array of doubles
-	for (int i = 0; i < size; i++) {
 		B[i] = (double*) malloc(sizeof(double) * size);
-	}
-
-	SEQ_MATRIX = (double **) malloc(size * sizeof(double*));
-	 // iterate through each row and malloc a size N array of doubles
-	for (int i = 0; i < size; i++) {
 		SEQ_MATRIX[i] = (double*) malloc(sizeof(double) * size);
-	}
-
-	PAR_MATRIX = (double **) malloc(size * sizeof(double*));
-	 // iterate through each row and malloc a size N array of doubles
-	for (int i = 0; i < size; i++) {
 		PAR_MATRIX[i] = (double*) malloc(sizeof(double) * size);
 	}
 
@@ -51,7 +40,6 @@ void mmm_init() {
       PAR_MATRIX[i][j] = 0; 
     }
 	}
-
 }
 
 /**
@@ -75,32 +63,26 @@ void mmm_freeup() {
 	for (int i = 0; i < size; i++) {
 		free(A[i]);
 		A[i] = NULL;  // dangling pointer
+
+		free(B[i]);
+		B[i] = NULL;
+
+		free(SEQ_MATRIX[i]);
+		SEQ_MATRIX[i] = NULL;
+
+		free(PAR_MATRIX[i]);
+		PAR_MATRIX[i] = NULL;
 	}
 	// free original array
 	free(A);
 	A = NULL;  // dangling pointer
 
-	// free matrix B
-	for (int i = 0; i < size; i++) {
-		free(B[i]);
-		B[i] = NULL;
-	}
 	free(B);
 	B = NULL;
 
-	// free seq-matrix
-	for (int i = 0; i < size; i++) {
-		free(SEQ_MATRIX[i]);
-		SEQ_MATRIX[i] = NULL;
-	}
 	free(SEQ_MATRIX);
 	SEQ_MATRIX = NULL;
 
-	// free par-matrix
-	for (int i = 0; i < size; i++) {
-		free(PAR_MATRIX[i]);
-		PAR_MATRIX[i] = NULL;
-	}
 	free(PAR_MATRIX);
 	PAR_MATRIX = NULL;
 }

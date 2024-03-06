@@ -10,6 +10,8 @@ unsigned int mode;
 unsigned int size, num_threads;
 double **A, **B, **SEQ_MATRIX, **PAR_MATRIX;
 
+// VERIFY THAT THE PROPER THINGS ARE BEING TIMED
+
 int main(int argc, char *argv[]) {
 
 	// TODO - deal with command line arguments, save the "mode"
@@ -74,7 +76,6 @@ int main(int argc, char *argv[]) {
 
 	// initialize my matrices
 	mmm_init();
-
 	double clockstart, clockend;
 
 	// << stuff I want to clock here >>
