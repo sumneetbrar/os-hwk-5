@@ -6,11 +6,6 @@ extern unsigned int mode;
 extern unsigned int size, num_threads;
 extern double **A, **B, **SEQ_MATRIX, **PAR_MATRIX;
 
-typedef struct {
-	int startRow;
-	int endRow;
-} Threadz;
-
 void mmm_init();
 void mmm_reset(double **);
 void mmm_freeup();

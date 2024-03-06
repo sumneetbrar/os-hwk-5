@@ -10,7 +10,10 @@ unsigned int mode;
 unsigned int size, num_threads;
 double **A, **B, **SEQ_MATRIX, **PAR_MATRIX;
 
-// VERIFY THAT THE PROPER THINGS ARE BEING TIMED
+typedef struct {
+	int startRow;
+	int endRow;
+} Threadz;
 
 int main(int argc, char *argv[]) {
 
@@ -124,17 +127,26 @@ int main(int argc, char *argv[]) {
 			Threadz *mmthread = malloc(num_threads * sizeof(Threadz));
 
 			int rowsPerThread = size / num_threads;
-			// HANDLE CASE WHERE IT ^ IS NOT DIVSIBLE
 			int initialStartRow = 0;
+			int leftovers = size % num_threads; // handling case where it isn't evenly divisible
 
+			// set up the start and end rows; create the threads
 			for (int i = 0; i < num_threads; i++) {
 				mmthread[i].startRow = initialStartRow;
 				mmthread[i].endRow = initialStartRow + rowsPerThread - 1;
+
+				// if leftovers, give one extra row to each thread
+				if (leftovers > 0) {
+					mmthread[i].endRow += 1;
+					leftovers -= 1;
+					initialStartRow += 1;
+				}
 
 				initialStartRow += rowsPerThread;
 				pthread_create(&threads[i], NULL, mmm_par, &mmthread[i]);
 			}
 
+			// join the threads together
 			for (int i = 0; i < num_threads; i++) {
 				pthread_join(threads[i], NULL);
 			}
@@ -160,6 +172,5 @@ int main(int argc, char *argv[]) {
 	}
 
 	mmm_freeup();
-	// anything else to free up?
 	return 0;
 }
