@@ -30,14 +30,9 @@ void mmm_init() {
 	for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       A[i][j] = (double)(rand() % 100);
-      B[i][j] = (double)(rand() % 100); 
-    }
-	}
-	// initialize SEQ_MATRIX and PAR_MATRIX with 0s
-	for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size; j++) {
-      SEQ_MATRIX[i][j] = 0;
-      PAR_MATRIX[i][j] = 0; 
+      B[i][j] = (double)(rand() % 100);
+			SEQ_MATRIX[i][j] = 0;
+      PAR_MATRIX[i][j] = 0;  
     }
 	}
 }

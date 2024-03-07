@@ -10,11 +10,6 @@ unsigned int mode;
 unsigned int size, num_threads;
 double **A, **B, **SEQ_MATRIX, **PAR_MATRIX;
 
-typedef struct {
-	int startRow;
-	int endRow;
-} Threadz;
-
 int main(int argc, char *argv[]) {
 
 	// TODO - deal with command line arguments, save the "mode"
@@ -78,8 +73,17 @@ int main(int argc, char *argv[]) {
 
 
 	// initialize my matrices
-	mmm_init();
 	double clockstart, clockend;
+	clockstart = rtclock();
+	mmm_init();
+	clockend = rtclock();
+	printf("First init time:: %.6f sec\n", clockend - clockstart);
+
+
+	clockstart = rtclock();
+	mmm_init2();
+	clockend = rtclock();
+	printf("Second init time:: %.6f sec\n", clockend - clockstart);
 
 	// << stuff I want to clock here >>
 	if (mode == 0) {
